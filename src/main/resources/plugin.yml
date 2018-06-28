@@ -1,0 +1,5 @@
+name: NCPFlags
+version: 1.0
+main: me.ihaq.ncpflags.NCPFlags
+depend: [NoCheatPlus]
+description: Receive NCP flags on your discord server.
