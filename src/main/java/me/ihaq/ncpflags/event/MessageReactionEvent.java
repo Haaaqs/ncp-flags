@@ -2,12 +2,13 @@ package me.ihaq.ncpflags.event;
 
 import me.ihaq.ncpflags.NCPFlags;
 import me.ihaq.ncpflags.hook.NCPCheckHook;
+import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
 
-public class DiscordEvents extends ListenerAdapter {
+public class MessageReactionEvent extends ListenerAdapter {
 
     @Override
     public void onMessageReactionAdd(MessageReactionAddEvent event) {
@@ -18,7 +19,13 @@ public class DiscordEvents extends ListenerAdapter {
         }
 
         MessageReaction.ReactionEmote reactionEmote = event.getReactionEmote();
-        String playerName = NCPCheckHook.getMessageById(event.getMessageId()).getEmbeds().get(0).getFields().get(0).getValue();
+        Message message = NCPCheckHook.getMessageById(event.getMessageId());
+
+        if (message == null) {
+            return;
+        }
+
+        String playerName = message.getEmbeds().get(0).getFields().get(0).getValue();
 
         if (reactionEmote.getName().equals("❗")) { // warn
             Bukkit.getPlayer(playerName).sendRawMessage(NCPFlags.Config.WARN_MESSAGE);

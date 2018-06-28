@@ -2,7 +2,7 @@ package me.ihaq.ncpflags;
 
 import me.ihaq.configmanager.ConfigManager;
 import me.ihaq.configmanager.data.ConfigValue;
-import me.ihaq.ncpflags.event.DiscordEvents;
+import me.ihaq.ncpflags.event.MessageReactionEvent;
 import me.ihaq.ncpflags.hook.NCPCheckHook;
 import me.ihaq.ncpflags.util.Loader;
 import net.dv8tion.jda.core.AccountType;
@@ -27,7 +27,7 @@ public class NCPFlags extends JavaPlugin {
         try {
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(Config.TOKEN)
-                    .addEventListener(new DiscordEvents())
+                    .addEventListener(new MessageReactionEvent())
                     .buildBlocking();
         } catch (LoginException | InterruptedException e) {
             e.printStackTrace();
