@@ -13,6 +13,10 @@ public class MessageReactionEvent extends ListenerAdapter {
     @Override
     public void onMessageReactionAdd(MessageReactionAddEvent event) {
 
+        if (!NCPFlags.Config.KICK_AND_WARN) {
+            return;
+        }
+        
         // if its our bot reacting we ignore it
         if (event.getMember().getUser().getId().equals(NCPFlags.getJda().getSelfUser().getId())) {
             return;

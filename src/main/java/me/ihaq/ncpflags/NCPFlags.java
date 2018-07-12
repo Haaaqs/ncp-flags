@@ -17,12 +17,13 @@ public class NCPFlags extends JavaPlugin {
 
     private static JavaPlugin plugin;
     private static JDA jda;
+    private ConfigManager configManager;
     private Loader[] loaders = new Loader[]{new NCPCheckHook()};
 
     @Override
     public void onEnable() {
         plugin = this;
-        new ConfigManager(this).register(new Config()).load();
+        configManager = new ConfigManager(this).register(new Config()).load();
 
         try {
             jda = new JDABuilder(AccountType.BOT)
@@ -43,6 +44,7 @@ public class NCPFlags extends JavaPlugin {
     @Override
     public void onDisable() {
         Arrays.stream(loaders).forEach(Loader::onDisable);
+        configManager.save();
         if (jda != null) {
             jda.shutdown();
         }
@@ -59,6 +61,9 @@ public class NCPFlags extends JavaPlugin {
     public static class Config {
         @ConfigValue("token")
         public static String TOKEN;
+
+        @ConfigValue("kick_and_warn")
+        public static boolean KICK_AND_WARN = true;
 
         @ConfigValue("channel_id")
         public static String CHANNEL_ID;

@@ -54,9 +54,11 @@ public class NCPCheckHook implements NCPHook, Loader {
         embedBuilder.addField("Violation Level", "" + Math.round(iViolationInfo.getTotalVl()), true);
 
         textChannel.sendMessage(embedBuilder.build()).queue(message -> {
-            message.addReaction("❗").queue();
-            message.addReaction("❌").queue();
-            messageList.add(message);
+            if (NCPFlags.Config.KICK_AND_WARN) {
+                message.addReaction("❗").queue();
+                message.addReaction("❌").queue();
+                messageList.add(message);
+            }
         });
 
         return false;
