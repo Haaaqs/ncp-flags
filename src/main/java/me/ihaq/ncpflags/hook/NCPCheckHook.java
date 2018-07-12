@@ -11,8 +11,10 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.bukkit.entity.Player;
+import org.yaml.snakeyaml.scanner.Constant;
 
 import java.awt.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +50,7 @@ public class NCPCheckHook implements NCPHook, Loader {
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(new Color(25, 153, 228).getRGB());
+        embedBuilder.setTimestamp(Instant.now());
 
         embedBuilder.addField("Player", player.getName(), true);
         embedBuilder.addField("Check", checkType.getName(), true);

@@ -1,6 +1,9 @@
 # Your discord bot token
 token: ""
 
+# Kicking and warning from discord
+kick_and_warn: true
+
 # The channel ID you want to the bot to post messages in
 channel_id: ""
 

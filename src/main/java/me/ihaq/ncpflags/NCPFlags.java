@@ -23,7 +23,9 @@ public class NCPFlags extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        configManager = new ConfigManager(this).register(new Config()).load();
+        configManager = new ConfigManager(this)
+                .register(new Config())
+                .load();
 
         try {
             jda = new JDABuilder(AccountType.BOT)
@@ -60,19 +62,19 @@ public class NCPFlags extends JavaPlugin {
 
     public static class Config {
         @ConfigValue("token")
-        public static String TOKEN;
+        public static String TOKEN = "";
 
         @ConfigValue("kick_and_warn")
         public static boolean KICK_AND_WARN = true;
 
         @ConfigValue("channel_id")
-        public static String CHANNEL_ID;
+        public static String CHANNEL_ID = "";
 
         @ConfigValue("warn_message")
-        public static String WARN_MESSAGE;
+        public static String WARN_MESSAGE = "";
 
         @ConfigValue("kick_message")
-        public static String KICK_MESSAGE;
+        public static String KICK_MESSAGE = "";
     }
 
 }
