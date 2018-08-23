@@ -1,4 +1,3 @@
-
 package me.ihaq.ncpflags.hook;
 
 import fr.neatmonster.nocheatplus.checks.CheckType;
@@ -8,36 +7,39 @@ import fr.neatmonster.nocheatplus.hooks.NCPHookManager;
 import me.ihaq.ncpflags.NCPFlags;
 import me.ihaq.ncpflags.util.Loader;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.TextChannel;
 import org.bukkit.entity.Player;
-import org.yaml.snakeyaml.scanner.Constant;
 
 import java.awt.*;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+
+import static me.ihaq.ncpflags.NCPFlags.Config.channelId;
+import static me.ihaq.ncpflags.NCPFlags.Config.kickAndWarn;
 
 public class NCPCheckHook implements NCPHook, Loader {
 
     private TextChannel textChannel;
-    private static List<Message> messageList = new ArrayList<>();
+    private NCPFlags plugin;
 
-    @Override
-    public void onEnable() {
+    public NCPCheckHook(NCPFlags plugin, JDA jda) {
+        this.plugin = plugin;
+
         NCPHookManager.addHook(CheckType.ALL, this);
-        textChannel = NCPFlags.getJda().getTextChannelById(NCPFlags.Config.CHANNEL_ID);
+        textChannel = jda.getTextChannelById(channelId);
     }
 
     @Override
-    public void onDisable() {
+    public void disable() {
         NCPHookManager.removeHook(this);
     }
 
+    @Override
     public String getHookName() {
         return "NCPFlags";
     }
 
+    @Override
     public String getHookVersion() {
         return "1.0";
     }
@@ -57,17 +59,15 @@ public class NCPCheckHook implements NCPHook, Loader {
         embedBuilder.addField("Violation Level", "" + Math.round(iViolationInfo.getTotalVl()), true);
 
         textChannel.sendMessage(embedBuilder.build()).queue(message -> {
-            if (NCPFlags.Config.KICK_AND_WARN) {
+            if (kickAndWarn) {
                 message.addReaction("❗").queue();
                 message.addReaction("❌").queue();
-                messageList.add(message);
+                plugin.getMessageList().add(message);
             }
         });
 
         return false;
     }
 
-    public static Message getMessageById(String id) {
-        return messageList.stream().filter(message -> message.getId().equals(id)).findFirst().orElse(null);
-    }
+
 }

@@ -16,16 +16,24 @@ Receive NCP flags on your discord server.
 * ❌ - Reacting to this emote will kick the player.
 
 ### Default config
-```yml
+```yaml
+# The prefix used for the messages
+prefix: '[&bNCPFlags&r]'
+
 # Your discord bot token
-token: ""
+token: ''
+
+# If you want to enable kick & warn emotes
+kick_and_warn: true
 
 # The channel ID you want to the bot to post messages in
-channel_id: ""
+channel_id: ''
 
-# The message the user receives when you warn him.
-warn_message: "&f[&bNCPFlags&f] You have been warned."
+messages:
+  # The message the user receives when you warn him.
+  warn: You have been warned.
+  
+  # The message the user receives when you kick him.
+  kick: You have been kicked.
 
-# The message the user receives when you kick him.
-kick_message: "&f[&bNCPFlags&f] You have been kicked."
 ```

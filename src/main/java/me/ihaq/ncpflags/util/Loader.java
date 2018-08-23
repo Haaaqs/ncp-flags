@@ -2,8 +2,12 @@ package me.ihaq.ncpflags.util;
 
 public interface Loader {
 
-    void onEnable();
+    default void enable() {
 
-    void onDisable();
+    }
+
+    default void disable() {
+
+    }
 
 }
